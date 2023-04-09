@@ -12,34 +12,24 @@
 
 
 SensorNetworkInterface::SensorNetworkInterface(int port) {
-    _port = port;    
+    _port = port;  
+    if(!_socket.create() ) {throw NetworkError("Error");}
+    if(!_socket.bind(_port))  {throw NetworkError("Error");}
+    if(!_socket.listen())    {throw NetworkError("Error");}  
+    _socket.set_non_blocking(false);
 }
 
 void SensorNetworkInterface::run() {
-
-    uint16_t port = _port;
-    Socket socket;
-    if (! socket.create() ) {throw NetworkError("Error");}
-        
-    if(!socket.bind(port))  {throw NetworkError("Error");}
-    if(!socket.listen())    {throw NetworkError("Error");}
-
-    std::cout << "Set up a listener socket on port: " << port << std::endl;
-    socket.set_non_blocking(false);
-
-
     std::string s;
     while (true)
     {
-        std::cout << "Waiting for connection on: " << port << "\n";
-        Socket new_sock;
-	    socket.accept (new_sock);
-	    std::cout << "Created new socket." << "\n";
-        socket.set_non_blocking(false);
-
+        std::cout << "Waiting for connection on: " << _port << "\n";
+        Socket new_socket;
+	    _socket.accept (new_socket);
+	    std::cout << "Accepted connection on: " << _port << "\n";
 
         while(true) {
-            socket.recv(s);
+            new_socket.recv(s);
             std::cout << "Received: " << s << std::endl;
             std::this_thread::sleep_for(chrono::seconds(1));
         }

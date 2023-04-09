@@ -3,6 +3,7 @@
 #include <thread>
 
 #include "Socket.h"
+#include "Network.h"
 
 
 using namespace std;
@@ -10,7 +11,13 @@ using namespace std;
 int main ( int argc, const char** argv ) {
 
     int port = std::stoi(string(argv[1]));
+    SensorNetworkInterface network(port);
 
+    network.run();
+
+    return 0;
+}
+/*
     Socket socket;
     if (! socket.create() ) {return 0;}
         
@@ -43,3 +50,5 @@ int main ( int argc, const char** argv ) {
 
     std::cout << "Received" << s << std::endl;
 }
+
+*/

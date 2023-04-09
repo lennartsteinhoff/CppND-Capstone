@@ -15,7 +15,7 @@ class Network {
     void send(string);
     
  private:   
-    //Socket _socket;
+    Socket _socket;
     uint _port;
     friend class SensorNetworkInterface;
     friend class ControllerNetworkInterface;

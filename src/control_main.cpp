@@ -9,6 +9,7 @@ using namespace std;
 int main() {
     uint16_t port = 30000;
     Socket socket;
+    
 
     if(! socket.create() ) {return -1;}
     if(! socket.connect("localhost", port) ) {return -1;}
