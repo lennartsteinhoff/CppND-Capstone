@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <thread>
+#include <memory.h>
 
 #include "Socket.h"
 #include "Network.h"
@@ -11,9 +12,11 @@ using namespace std;
 int main ( int argc, const char** argv ) {
 
     int port = std::stoi(string(argv[1]));
-    SensorNetworkInterface network(port);
+    auto network = make_shared<SensorNetworkInterface>(port);
 
-    network.run();
+    thread t (&SensorNetworkInterface::run, network);
+
+    t.join();
 
     return 0;
 }

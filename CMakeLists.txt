@@ -9,6 +9,6 @@ project(Capstone)
 
 include_directories(include)
 
-add_executable(sensor src/sensor_main.cpp src/Socket.cpp src/Network.cpp)
+add_executable(sensor src/sensor_main.cpp src/Socket.cpp src/Network.cpp, src/sensor.cpp)
 add_executable(control src/control_main.cpp src/Socket.cpp)
 
