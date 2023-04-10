@@ -29,18 +29,28 @@ void SensorNetworkInterface::run() {
 	    std::cout << "Accepted connection on: " << _port << "\n";
 
         while(true) {
-            new_socket.recv(s);
-            std::cout << "Received: " << s << std::endl;
+            if(new_socket.recv(s)) {
+                _recv_queue.push_back(s);
+                std::cout << "Received: " << std::endl;
+                for (auto& x : _recv_queue) {
+                    std::cout << x << " " << std::endl;
+                }
+                std::cout << std::endl;
+            }
             std::this_thread::sleep_for(chrono::seconds(1));
         }
 
     } 
+}
 
-    
+bool SensorNetworkInterface::hasMessage() {
+    return !_recv_queue.empty();
+}
 
-
-
-
+string SensorNetworkInterface::getMessage() {
+    auto ret = _recv_queue.back();
+    _recv_queue.pop_back();
+    return ret;
 }
 
 string SensorNetworkInterface::recv() {

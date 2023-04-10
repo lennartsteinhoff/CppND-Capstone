@@ -5,30 +5,33 @@
 #include <deque>
 
 #include "Socket.h"
+#include "Sensor.h"
+#include "Network.h"
 
 using namespace std;
 
-enum class SensorState {sleep, running};
+void Sensor::run() {
+    while (true)
+    {
+        if (_network) updateInput();
 
-class Sensor {
-public:
-    void run() {
-        while (true)
+        switch (_state)
         {
-            switch (_state)
-            {
             case SensorState::sleep:
-                cout << "Sleeping" << endl;
+                cout << "Sensor: Sleeping" << endl;
                 break;
             
             case SensorState::running:
-                cout << "Running" << endl;
+                cout << "Sensor: Running" << endl;
                 break;
-            }
-            this_thread::sleep_for(chrono::milliseconds(500));
         }
+        this_thread::sleep_for(chrono::milliseconds(500));
     }
-    void input(string s) {
+}
+
+void Sensor::updateInput() {
+    if(_network->hasMessage()) {
+        std::string s = _network->getMessage();
         cout << "Received Input: " << s << endl;
         if(s == "sleep") {
             _state = SensorState::sleep;
@@ -37,26 +40,11 @@ public:
             _state = SensorState::running;
         }
     }
-private:
-    SensorState _state = SensorState::running;
-};
 
-
-
-int main(int argc, char ** argv) {
-
-    auto sensor = make_shared<Sensor>();
-    thread main(&Sensor::run, sensor);
-    
-
-    this_thread::sleep_for(chrono::seconds(2));
-    sensor->input("sleep");
-    cout << "Called sleep" << endl;
-
-    this_thread::sleep_for(chrono::seconds(2));
-    sensor->input("running");
-
-    main.join();
-
-    return 0;
 }
+
+void Sensor::setNetwork(shared_ptr<SensorNetworkInterface> network) {
+    _network = network;
+}
+
+

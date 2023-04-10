@@ -24,3 +24,11 @@ In this project, you can build your own C++ application starting with this repo,
 2. Make a build directory in the top level directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
 4. Run it: `./HelloWorld`.
+
+
+
+## ToDos
+1. Correct Readme
+1.1 Define Protocol
+2. Define Messages
+3. Do logging

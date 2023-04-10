@@ -3,6 +3,7 @@
 
 #include <deque>
 #include "Socket.h"
+#include "MessageQueue.h"
 
 using namespace std;
 
@@ -11,18 +12,21 @@ class Network {
     Network(){};
     ~Network(){};
     void run();
-    string recv();
-    void send(string);
-    
+
+
  private:   
     Socket _socket;
     uint _port;
+    deque<string> _send_queue;
+    deque<string> _recv_queue;
+    string recv();
+    void send(string);
     friend class SensorNetworkInterface;
     friend class ControllerNetworkInterface;
 };
 
 
-#endif
+
 
 /*
 class ControllerNetworkInterface : public Network {
@@ -41,4 +45,9 @@ class SensorNetworkInterface : public Network {
     void run() ;
     string recv();
     void send(string);
+    bool hasMessage();
+    void sendMessage(string);
+    string getMessage();
 };
+
+#endif
