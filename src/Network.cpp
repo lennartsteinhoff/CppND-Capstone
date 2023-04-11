@@ -6,30 +6,34 @@
 #include "NetworkError.h"
 
 
-/* ControllerNetworkInterface::ControllerNetworkInterface(string ip, int port) {
+ControlerNetworkAdapter::ControlerNetworkAdapter(string ip, int port) {
+    if(!_socket.create() ) {throw NetworkError("Error");}
+    if(!_socket.connect(ip, port)) {throw NetworkError("Error");}
+    _isServer = false;
+}
 
-}*/
 
-
-SensorNetworkInterface::SensorNetworkInterface(int port) {
+SensorNetworkAdapter::SensorNetworkAdapter(int port) {
     _port = port;  
     if(!_socket.create() ) {throw NetworkError("Error");}
     if(!_socket.bind(_port))  {throw NetworkError("Error");}
     if(!_socket.listen())    {throw NetworkError("Error");}  
     _socket.set_non_blocking(false);
+    _isServer = true;
 }
 
-void SensorNetworkInterface::run() {
-    std::string s;
+void Network::run() {
     while (true)
-    {
-        std::cout << "Waiting for connection on: " << _port << "\n";
-        Socket new_socket;
-	    _socket.accept (new_socket);
-	    std::cout << "Accepted connection on: " << _port << "\n";
+    { 
+        if(_isServer) {
+            std::cout << "Waiting for connection on: " << _port << "\n";
+            _socket.accept (_socket);
+            std::cout << "Accepted connection on: " << _port << "\n";
+        }
 
         while(true) {
-            if(new_socket.recv(s)) {
+            string s;
+            if(_socket.recv(s)) {
                 _recv_queue.push_back(s);
                 std::cout << "Received: " << std::endl;
                 for (auto& x : _recv_queue) {
@@ -43,20 +47,16 @@ void SensorNetworkInterface::run() {
     } 
 }
 
-bool SensorNetworkInterface::hasMessage() {
+bool Network::hasMessage() {
     return !_recv_queue.empty();
 }
 
-string SensorNetworkInterface::getMessage() {
+string Network::recv() {
     auto ret = _recv_queue.back();
     _recv_queue.pop_back();
     return ret;
 }
 
-string SensorNetworkInterface::recv() {
-    return "test";
-}
-
-void SensorNetworkInterface::send(string s) {
-
+void Network::send(string s) {
+    _send_queue.emplace_back(s);
 }

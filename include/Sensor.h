@@ -17,10 +17,10 @@ class Sensor {
 public:
     void run();
     void updateInput();
-    void setNetwork(shared_ptr<SensorNetworkInterface>);
+    void setNetwork(shared_ptr<Network>);
 private:
     SensorState _state = SensorState::sleep;
-    shared_ptr<SensorNetworkInterface> _network;
+    shared_ptr<Network> _network;
 };
 
 #endif

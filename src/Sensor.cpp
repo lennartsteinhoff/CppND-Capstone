@@ -31,7 +31,7 @@ void Sensor::run() {
 
 void Sensor::updateInput() {
     if(_network->hasMessage()) {
-        std::string s = _network->getMessage();
+        std::string s = _network->recv();
         cout << "Received Input: " << s << endl;
         if(s == "sleep") {
             _state = SensorState::sleep;
@@ -43,7 +43,7 @@ void Sensor::updateInput() {
 
 }
 
-void Sensor::setNetwork(shared_ptr<SensorNetworkInterface> network) {
+void Sensor::setNetwork(shared_ptr<Network> network) {
     _network = network;
 }
 

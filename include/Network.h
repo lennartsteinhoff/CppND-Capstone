@@ -12,42 +12,33 @@ class Network {
     Network(){};
     ~Network(){};
     void run();
-
+    bool hasMessage();
+    void send(string);
+    string recv();
 
  private:   
     Socket _socket;
     uint _port;
+    bool _isServer;
     deque<string> _send_queue;
     deque<string> _recv_queue;
-    string recv();
-    void send(string);
-    friend class SensorNetworkInterface;
-    friend class ControllerNetworkInterface;
+    friend class SensorNetworkAdapter;
+    friend class ControlerNetworkAdapter;
 };
 
 
 
 
-/*
-class ControllerNetworkInterface : public Network {
+
+class ControlerNetworkAdapter : public Network {
     public:
-    ControllerNetworkInterface(string ip, int port);
-    //void run() override;
-    //string recv() override;
-    //void send(string) override;
+    ControlerNetworkAdapter(string ip, int port);
 };
 
-*/
 
-class SensorNetworkInterface : public Network {
+class SensorNetworkAdapter : public Network {
     public:
-    SensorNetworkInterface(int port);
-    void run() ;
-    string recv();
-    void send(string);
-    bool hasMessage();
-    void sendMessage(string);
-    string getMessage();
+    SensorNetworkAdapter(int port);
 };
 
 #endif
