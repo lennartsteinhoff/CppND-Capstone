@@ -30,5 +30,9 @@ In this project, you can build your own C++ application starting with this repo,
 ## ToDos
 1. Correct Readme
 1.1 Define Protocol
-2. Define Messages
+2. Define Messages in Readme
 3. Do logging
+4. Complete Network Abstraction
+5. Do Data Transfer to Control Unit
+6. Visualize Data
+7. Implement Better Messages
