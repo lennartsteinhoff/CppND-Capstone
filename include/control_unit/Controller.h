@@ -22,31 +22,14 @@ class Controller {
     ~Controller() {
         _network_thread.join();
     }
-    string printStatus(){
-        string status = _measurementMode ? "ongoing" : "stopped";
-        return "Controller: Measurement " + status + "\nNetwork: " + _network->printNetworkActivity();
-    }
+    string printStatus();
     
     void runNetwork();
     void runStateMachine();
     void sendEvent(Message);
-    void shutdown() {
-        _running = false;
-        _network->send("control: shutdown_sensor");
-        this_thread::sleep_for(chrono::milliseconds(1000));
-        string s{"Unlock blocking network call on Sensor site"};
-        cout << "Controller: " << s << endl;
-        _network->send(s);
-        this_thread::sleep_for(chrono::milliseconds(1000));
-        cout << "Controller: Shuttdown own network" << endl;
-        _network->shutdown();
-        this_thread::sleep_for(chrono::seconds(1));
-        cout << "Controller: Exit shutdown sequence" << endl;
-    }
+    void shutdown();
 
-    void toggle() {
-        _measurementMode = !_measurementMode;
-    }
+    void toggle();
 
     Message::Data GetMeasurement();
 
@@ -60,6 +43,9 @@ class Controller {
     Network* _network = nullptr;
     bool _running {true};
     bool _measurementMode {false};
+    int _ms_waited_for_network = 0;
+    int _message_counter = 0;
+    
 };
 
 #endif

@@ -21,6 +21,7 @@ class Network {
     };
     void run();
     bool hasMessage();
+    void waitForMessage();
     void send(string);
     string recv();
     void shutdown();
@@ -46,6 +47,7 @@ class Network {
     deque<string> _recv_queue;
     mutex _rcv_mtx;
     mutex _snd_mtx;
+    condition_variable _rcv_cv;
     friend class SensorNetworkAdapter;
     friend class ControllerNetworkAdapter;
 

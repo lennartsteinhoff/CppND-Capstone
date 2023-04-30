@@ -19,7 +19,15 @@ void Controller::runNetwork()
     string received_data;
     Message m;
 
+    auto t0 = chrono::system_clock::now();
+    auto t1 = chrono::system_clock::now();
+
     while (_running) {
+        t0 = chrono::system_clock::now();
+        _network->waitForMessage();
+        t1 = chrono::system_clock::now();
+        _message_counter++;
+        _ms_waited_for_network += (chrono::duration_cast<std::chrono::milliseconds>(t1-t0)).count();
         while(_network->hasMessage()){
             received_data = _network->recv();
             m.setPayload(received_data);
@@ -32,8 +40,31 @@ void Controller::runNetwork()
                 _events.emplace_back(m);
             }
         } 
-        std::this_thread::sleep_for(chrono::milliseconds(100));
     }
+}
+
+void Controller::shutdown()
+{
+    _running = false;
+    _network->send("control: shutdown_sensor");
+    this_thread::sleep_for(chrono::milliseconds(1000));
+    string s{"Unlock blocking network call on Sensor site"};
+    cout << "Controller: " << s << endl;
+    _network->send(s);
+    this_thread::sleep_for(chrono::milliseconds(1000));
+    cout << "Controller: Shuttdown own network" << endl;
+    _network->shutdown();
+    this_thread::sleep_for(chrono::seconds(1));
+    cout << "Controller: Exit shutdown sequence" << endl;
+}
+
+string Controller::printStatus()
+{
+    string status = _measurementMode ? "ongoing" : "stopped";
+    return "Controller: Measurement " + status + "\n"
+            + "Network: " + _network->printNetworkActivity() + "\n"
+            + "Avertime Waited for Message: " + (_message_counter ? to_string(int(_ms_waited_for_network / _message_counter)) : " N/A") + " ms\n"
+            + "Messages received: " + to_string(_message_counter) + "\n";
 }
 
 void Controller::runStateMachine() 
@@ -62,4 +93,10 @@ Message::Data Controller::GetMeasurement()
         }
     }
     return move(measurement);
+}
+
+void Controller::toggle() 
+{
+    _measurementMode = !_measurementMode;
+    _ms_waited_for_network = 0;
 }

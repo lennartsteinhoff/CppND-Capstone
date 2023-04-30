@@ -28,7 +28,8 @@ The important classes are:
     - Network.h: 
         - uses Linux sockets to implement the massage passings
         - uses threads and protected queues to provide a simple interface for higher layers
-        - USES TECHNICES: Classes, Multithreading, Mutexes, IO, Rule of 3
+        - USES TECHNICES: Classes, Multithreading, Mutexes, IO, Rule of 3, Conditional Variables
+        - Conditional variables used to provide: void Network::waitForMessages()
     - (main) sensor_main.cpp & Sensor.h: 
         - uses the network class to communicate with the control_unit
         - runs a simple state machine that reacts on network requests

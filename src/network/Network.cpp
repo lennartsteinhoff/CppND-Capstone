@@ -48,10 +48,14 @@ void Network::recv_loop() {
             _rx += s.size();
         }
         _rcv_mtx.unlock();
+        _rcv_cv.notify_one();
         this_thread::sleep_for(chrono::milliseconds(10));
     }
-    
+}
 
+void Network::waitForMessage() {
+    unique_lock<std::mutex> lock(_rcv_mtx);
+    _rcv_cv.wait(lock, [this]() {return (!(this->_recv_queue.empty()) | !this->_running);}); 
 }
 
 void Network::send_loop() {
@@ -92,4 +96,5 @@ void Network::send(string s) {
 
 void Network::shutdown() {
     _running = false;
+    _rcv_cv.notify_one();
 }
