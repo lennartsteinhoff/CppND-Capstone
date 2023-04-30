@@ -20,6 +20,45 @@ The protocol, the messages and the implementation of the communication between t
 Start/Stop Measurement by pressing "s", when SLD_Window is open and selected
 Press c or ctrl-c to trigger the shutdown process for both components
 
+## Structure:
+
+The projects contains of two main programms control_unit/control_main.cpp and sensor/sensor_main.cpp that simulate a simple network protocol.
+
+The important classes are:
+    - Network.h: 
+        - uses Linux sockets to implement the massage passings
+        - uses threads and protected queues to provide a simple interface for higher layers
+        - USES TECHNICES: Classes, Multithreading, Mutexes, IO, Rule of 3
+    - (main) sensor_main.cpp & Sensor.h: 
+        - uses the network class to communicate with the control_unit
+        - runs a simple state machine that reacts on network requests
+        - creates random numbers to mock a measurement
+        - USES TECHNICES: Classes, IO
+    - (main) control_main.cpp, Controller.h & InputController.h
+        - composed of Controller.h and InputController.h, where the controller controls the sensor over networking using the user input.
+        - Implementation is based to the Game Loop provided in the project instructions
+        - USES TECHNICES: Classes, IO, Shared Pointers
+    - Messages.h:
+        - Implements a wrapper class to handle and passed the transfered string messages
+        - USES TECHNICES: Classes, Shared Pointers, Rule of 5
+    - Display.h:
+        - Uses SDL.h to visualize the measurements
+        - USES TECHNICES: IO
+
+
+## Protocol:
+
+Protocol User and Controller:
+1. User sends "event: start_stop_toggle" to start and stop a measurement
+2. User sends "event: shutdown" to exit the application
+
+
+Protocol Controller and Sensor:
+1. Controller starts communication by sending: "control: start_sensor" to start the measurement
+2. The sensor sends data in comma-separeted x y float value pairs, each float value pair seperated by a space
+3. Once completed the measurement the controller sends: "control: sleep_sensor"
+4. If shutting down, the controller sends "control: sleep_sensor"
+
 ## Messages:
 
 ### control:
@@ -37,19 +76,6 @@ String payload = "status_sensor: error"
 ### data:
 String payload = "data:<float x> <float y>, <float x> <float y>, ..."
 
-## Protocol:
-
-Protocol User and Controller:
-1. User sends "event: start_stop_toggle" to start and stop a measurement
-2. User sends "event: shutdown" to exit the application
-
-
-Protocol Controller and Sensor:
-1. Controller starts communication by sending: "control: start_sensor" to start the measurement
-2. The sensor sends data in comma-separeted x y float value pairs, each float value pair seperated by a space
-3. Once completed the measurement the controller sends: "control: sleep_sensor"
-4. If shutting down, the controller sends "control: sleep_sensor"
-
 
 ## Core ToDos
 1. Correct Readme                                          (/)
@@ -64,7 +90,6 @@ Protocol Controller and Sensor:
 8. Threadprotect:: Queues, socket, cout                    (/)
      
 ## Improvments:
-Test Messages
 Implement Queues in Controller                              (/)
 Implement Rule of Five: Message, Network                    (/)
 Move Semantics in Message, Network                          (/)
@@ -75,9 +100,9 @@ Improve sleep(10) by waiting
 
 
 Ideas:
-Eventloop in Main                                           
+Better Eventloop in Main                                           
 Reactive to: Random failures, Mouse clicks
-Recover from Error states
+Better recovery from Error states
 
 
 Out of scope:
