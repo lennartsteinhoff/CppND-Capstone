@@ -13,15 +13,32 @@ class Message {
     Message() {};
     Message(Message const &source) {
         _type = source._type;
-        _payload = stringstream(source._payload.str());
+        _payload = source._payload;
         _data = source._data;
         _size = source._size;
     }
-    Message(Message &&source) {}
-    Message& operator=(Message const &source) {}
-    Message& operator=(Message &&source) {}
+    Message(Message &&source) {
+        _type = source._type;
+        _payload = move(source._payload);
+        _data = move(source._data);
+        _size = source._size;
+    }
+    Message& operator=(Message const &source) {
+        _type = source._type;
+        _payload = source._payload;
+        _data = source._data;
+        _size = source._size;
+        return *this;
+    }
+    Message& operator=(Message &&source) {
+        _type = source._type;
+        _payload = move(source._payload);
+        _data = move(source._data);
+        _size = source._size;
+        return *this;
+    }
     
-    string getPayload() {return _payload.str();}
+    string getPayload() {return _payload;}
     void setPayload(string);
 
 
@@ -38,7 +55,7 @@ class Message {
 
     private:
     Type _type;
-    stringstream _payload;
+    string _payload;
     Data _data;
     uint _size;
     void parse();

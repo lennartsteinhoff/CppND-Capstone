@@ -36,6 +36,7 @@ void Sensor::run() {
                 if (prev_state != _state) cout << "Sensor: Running" << endl; 
                 _network->send("state: running");
                 _network->send(simulateMeasurement());
+                cout << "Network activity: " << _network->printNetworkActivity() << endl; 
                 break;
             case SensorState::shutdown:
                 break;

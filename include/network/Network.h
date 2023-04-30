@@ -26,7 +26,7 @@ class Network {
     void shutdown();
     
     string printNetworkActivity() {
-        string s {"tx: " + to_string(_tx) + ", rx: " + to_string(_rx)};
+        string s {"tx: " + to_string(_tx) + " bytes, rx: " + to_string(_rx) + "bytes"};
         _tx = 0;
         _rx = 0;
         return s;
@@ -40,8 +40,8 @@ class Network {
     Socket _socket;
     uint _port;
     bool _isServer;
-    double _tx;
-    double _rx;
+    int _tx;
+    int _rx;
     deque<string> _send_queue;
     deque<string> _recv_queue;
     mutex _rcv_mtx;

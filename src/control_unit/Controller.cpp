@@ -20,20 +20,18 @@ void Controller::runNetwork()
     Message m;
 
     while (_running) {
-        _data_mtx.lock();
-        _events_mtx.lock();
         while(_network->hasMessage()){
             received_data = _network->recv();
             m.setPayload(received_data);
             
             if(m.type() == Message::Type::data) {
+                lock_guard lock1(_data_mtx);
                 _data.emplace_back(m);
             } else {
+                lock_guard lock2(_events_mtx);
                 _events.emplace_back(m);
             }
-        }
-        _data_mtx.unlock();
-        _events_mtx.unlock();  
+        } 
         std::this_thread::sleep_for(chrono::milliseconds(100));
     }
 }
