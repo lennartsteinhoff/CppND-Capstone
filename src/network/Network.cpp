@@ -79,7 +79,7 @@ string Network::recv() {
     if(!_recv_queue.empty()) {
         auto ret = _recv_queue.back();
         _recv_queue.pop_back();
-        return ret;
+        return move(ret);
     }
     return "";
 
