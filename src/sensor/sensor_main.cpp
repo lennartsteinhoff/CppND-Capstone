@@ -10,8 +10,12 @@
 using namespace std;
 
 int main ( int argc, const char** argv ) {
-
-    int port = std::stoi(string(argv[1]));
+    int port;
+    if(argc <= 1) {
+        port = 30000;
+    } else {
+        port = std::stoi(string(argv[1]));
+    }
     auto network = make_shared<SensorNetworkAdapter>(port);
     thread t1 (&SensorNetworkAdapter::run, network);
 
@@ -19,8 +23,12 @@ int main ( int argc, const char** argv ) {
     sensor->setNetwork(network);
     thread t2 (&Sensor::run, sensor);
 
-    t1.join();
     t2.join();
+    cout << "Sensor: StateMachine shutdown complete" << endl;
+
+    cout << "Sensor: Waiting for network shutdown" << endl;
+    t1.join();
+    cout << "Sensor: shutdown complete" << endl;
 
     return 0;
 }
