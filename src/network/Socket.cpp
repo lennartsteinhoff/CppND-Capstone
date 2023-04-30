@@ -1,5 +1,7 @@
 // Implementation of the Socket class.
 
+//This code was found here, used as libary: https://tldp.org/LDP/LG/issue74/tougher.html
+
 
 #include "Socket.h"
 #include "string.h"

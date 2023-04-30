@@ -2,10 +2,12 @@
 
 This projects simulates a senor contected to a controller over ethernet, as it can be found for radars in the automotive industrie.
 
+The protocol, the messages and the implementation of the communication between the statemachines is a the core of the project.
+
+
+## Reference to code of other authors
 The networking code is build upon: https://tldp.org/LDP/LG/issue74/tougher.html
 The visualzation and main loops builds upon: https://github.com/udacity/CppND-Capstone-Snake-Game
-
-The protocol, the messages and the implementation of the communication between the statemachines is a the core of the project.
 
 ## Basic Build Instructions
 
@@ -25,26 +27,26 @@ Press c or ctrl-c to trigger the shutdown process for both components
 The projects contains of two main programms control_unit/control_main.cpp and sensor/sensor_main.cpp that simulate a simple network protocol.
 
 The important classes are:
-    - Network.h: 
-        - uses Linux sockets to implement the massage passings
-        - uses threads and protected queues to provide a simple interface for higher layers
-        - USES TECHNICES: Classes, Multithreading, Mutexes, IO, Rule of 3, Conditional Variables
-        - Conditional variables used to provide: void Network::waitForMessages()
-    - (main) sensor_main.cpp & Sensor.h: 
-        - uses the network class to communicate with the control_unit
-        - runs a simple state machine that reacts on network requests
-        - creates random numbers to mock a measurement
-        - USES TECHNICES: Classes, IO
-    - (main) control_main.cpp, Controller.h & InputController.h
-        - composed of Controller.h and InputController.h, where the controller controls the sensor over networking using the user input.
-        - Implementation is based to the Game Loop provided in the project instructions
-        - USES TECHNICES: Classes, IO, Shared Pointers
-    - Messages.h:
-        - Implements a wrapper class to handle and passed the transfered string messages
-        - USES TECHNICES: Classes, Shared Pointers, Rule of 5
-    - Display.h:
-        - Uses SDL.h to visualize the measurements
-        - USES TECHNICES: IO
+- Network.h: 
+- uses Linux sockets to implement the massage passings
+    - uses threads and protected queues to provide a simple interface for higher layers
+    - USES TECHNICES: Classes, Multithreading, Mutexes, IO, Rule of 3, Conditional Variables
+    - Conditional variables used to provide: void Network::waitForMessages()
+- (main) sensor_main.cpp & Sensor.h: 
+    - uses the network class to communicate with the control_unit
+    - runs a simple state machine that reacts on network requests
+    - creates random numbers to mock a measurement
+    - USES TECHNICES: Classes, IO
+- (main) control_main.cpp, Controller.h & InputController.h
+    - composed of Controller.h and InputController.h, where the controller controls the sensor over networking using the user input.
+    - Implementation is based to the Game Loop provided in the project instructions
+    - USES TECHNICES: Classes, IO, Shared Pointers
+- Messages.h:
+    - Implements a wrapper class to handle and passed the transfered string messages
+    - USES TECHNICES: Classes, Shared Pointers, Rule of 5
+- Display.h:
+    - Uses SDL.h to visualize the measurements
+    - USES TECHNICES: IO
 
 
 ## Protocol:
@@ -75,13 +77,11 @@ String payload = "status_sensor: error"
 
 
 ### data:
-String payload = "data:<float x> <float y>, <float x> <float y>, ..."
+String payload = "data: float_x float_y, float_x float_y, ..."
 
 
 ## Core ToDos
-1. Correct Readme                                          (/)
-1.1 Define Protocol                                        (/)
-2.0 Correct shutdown behavior                              (/)
+1. Define Protocol                                         (/)
 2. Define Messages in Readme                               (/)
 3. Implement Message incl. Rule of Five                    (/)
 4. Complete Network Abstraction                            (/) 
@@ -89,14 +89,19 @@ String payload = "data:<float x> <float y>, <float x> <float y>, ..."
 6. Visualize Data                                          (/)
 7. Implement recation to keyboard events                   (/)
 8. Threadprotect:: Queues, socket, cout                    (/)
+9. Correct shutdown behavior                               (/)
      
-## Improvments:
-Implement Queues in Controller                              (/)
-Implement Rule of Five: Message, Network                    (/)
-Move Semantics in Message, Network                          (/)
-Improve runNetwork loop by "Conditional Variable"
-Improve sleep(10) by waiting
-8. timing in gaming loop (Precise Time for every comp)
+## Further Improvments:
+1. Implement Queues in Controller                              (/)
+2. Implement Rule of Five: Message, Network                    (/)
+3. Move Semantics in Message, Network                          (/)
+4. Improve runNetwork loop by "Conditional Variable"           (/)
+5. Improve sleep(10) in Controller by cv.wait()                (/)            
+6. timing in gaming loop (Precise Time for every comp)         (/)
+7. code formatting                  
+8. improve understanding of the socket interface 
+9. Rework use of messages
+
 
 
 

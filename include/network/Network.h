@@ -1,3 +1,6 @@
+// wrapper code to ecpasulate https://tldp.org/LDP/LG/issue74/tougher.html
+// and reuse it for this project
+
 #ifndef NETWORK_H
 #define NETWORK_H
 
@@ -6,6 +9,7 @@
 
 #include "Socket.h"
 #include "MessageQueue.h"
+
 
 using namespace std;
 

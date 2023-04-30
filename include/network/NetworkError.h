@@ -1,7 +1,10 @@
 #ifndef NETWORKERROR_H
 #define NETWORKERROR_H
 
+//code found here: https://tldp.org/LDP/LG/issue74/tougher.html
+
 #include <string>
+
 
 class NetworkError
 {
