@@ -28,7 +28,7 @@ The projects contains of two main programms control_unit/control_main.cpp and se
 
 The important classes are:
 - Network.h: 
-- uses Linux sockets to implement the massage passings
+    - uses Linux sockets to implement the massage passings
     - uses threads and protected queues to provide a simple interface for higher layers
     - USES TECHNICES: Classes, Multithreading, Mutexes, IO, Rule of 3, Conditional Variables
     - Conditional variables used to provide: void Network::waitForMessages()
@@ -99,17 +99,3 @@ String payload = "data: float_x float_y, float_x float_y, ..."
 5. Improve sleep(10) in Controller by cv.wait()                (/)            
 6. timing in gaming loop (Precise Time for every comp)         (/)
 7. code formatting                                             (/)
-
-
-Out of scope, next steps:
-- Better Eventloop in Main                                           
-- Reactive to: Random failures, Mouse clicks
-- Better recovery from Error states
-- improve understanding of the socket interface 
-- Rework use of messages
-- Set frequency of sensor 
-- Implement Better Messages in efficient Binary Format 
-- Do logging  
-- Implement restart behavior  
-- Get rid of sending deadlock unlock message for network receive call by controller during shutdown
-
