@@ -98,3 +98,11 @@ void Network::shutdown() {
     _running = false;
     _rcv_cv.notify_one();
 }
+
+string Network::printNetworkActivity() 
+{
+    string s {"tx: " + to_string(_tx) + " bytes, rx: " + to_string(_rx) + " bytes"};
+    _tx = 0;
+    _rx = 0;
+    return s;
+}

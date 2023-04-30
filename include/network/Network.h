@@ -26,12 +26,7 @@ class Network {
     string recv();
     void shutdown();
     
-    string printNetworkActivity() {
-        string s {"tx: " + to_string(_tx) + " bytes, rx: " + to_string(_rx) + "bytes"};
-        _tx = 0;
-        _rx = 0;
-        return s;
-    }
+    string printNetworkActivity();
 
  private:   
     void recv_loop();
