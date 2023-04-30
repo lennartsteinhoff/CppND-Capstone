@@ -7,53 +7,64 @@
 
 using namespace std;
 
-class Message {
-    public:
+class Message
+{
+public:
     Message(string);
-    Message() {};
-    Message(Message const &source) {
+    Message(){};
+    Message(Message const &source)
+    {
         _type = source._type;
         _payload = source._payload;
         _data = source._data;
         _size = source._size;
     }
-    Message(Message &&source) {
+    Message(Message &&source)
+    {
         _type = source._type;
         _payload = move(source._payload);
         _data = move(source._data);
         _size = source._size;
     }
-    Message& operator=(Message const &source) {
+    Message &operator=(Message const &source)
+    {
         _type = source._type;
         _payload = source._payload;
         _data = source._data;
         _size = source._size;
         return *this;
     }
-    Message& operator=(Message &&source) {
+    Message &operator=(Message &&source)
+    {
         _type = source._type;
         _payload = move(source._payload);
         _data = move(source._data);
         _size = source._size;
         return *this;
     }
-    
-    string getPayload() {return _payload;}
+
+    string getPayload() { return _payload; }
     void setPayload(string);
 
-
     typedef vector<vector<double>> Data;
-    enum class Type { command, data, control};
+    enum class Type
+    {
+        command,
+        data,
+        control
+    };
 
-    Data data() {
+    Data data()
+    {
         return _data;
     }
 
-    Message::Type type() {
+    Message::Type type()
+    {
         return _type;
     }
 
-    private:
+private:
     Type _type;
     string _payload;
     Data _data;

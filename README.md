@@ -98,23 +98,18 @@ String payload = "data: float_x float_y, float_x float_y, ..."
 4. Improve runNetwork loop by "Conditional Variable"           (/)
 5. Improve sleep(10) in Controller by cv.wait()                (/)            
 6. timing in gaming loop (Precise Time for every comp)         (/)
-7. code formatting                  
-8. improve understanding of the socket interface 
-9. Rework use of messages
+7. code formatting                                             (/)
 
 
-
-
-Ideas:
-Better Eventloop in Main                                           
-Reactive to: Random failures, Mouse clicks
-Better recovery from Error states
-
-
-Out of scope:
-Set frequency of sensor 
-Implement Better Messages in efficient Binary Format 
-3. Do logging  
-2.0 Implement restart behavior  
-3.0 Get rid of sending deadlock unlock message for network receive call by controller during shutdown;  
+Out of scope, next steps:
+- Better Eventloop in Main                                           
+- Reactive to: Random failures, Mouse clicks
+- Better recovery from Error states
+- improve understanding of the socket interface 
+- Rework use of messages
+- Set frequency of sensor 
+- Implement Better Messages in efficient Binary Format 
+- Do logging  
+- Implement restart behavior  
+- Get rid of sending deadlock unlock message for network receive call by controller during shutdown
 

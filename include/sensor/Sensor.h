@@ -2,7 +2,7 @@
 #define SENSOR_H
 
 #include <iostream>
-#include <chrono> 
+#include <chrono>
 #include <thread>
 #include <memory>
 #include <deque>
@@ -12,18 +12,25 @@
 
 using namespace std;
 
-enum class SensorState {sleep, running, shutdown};
+enum class SensorState
+{
+    sleep,
+    running,
+    shutdown
+};
 
-class Sensor {
+class Sensor
+{
 public:
     void run();
     void updateInput();
     void setNetwork(shared_ptr<Network>);
     string simulateMeasurement();
+
 private:
     SensorState _state = SensorState::sleep;
     shared_ptr<Network> _network;
-    bool _shutdownPhase {false};
+    bool _shutdownPhase{false};
     SensorState _prev_state;
     string _prev_input;
 };

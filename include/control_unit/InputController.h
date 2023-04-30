@@ -4,8 +4,9 @@
 #include <memory>
 #include "Controller.h"
 
-class InputController {
-    public:
+class InputController
+{
+public:
     void HandleInput(shared_ptr<Controller> controller, bool &running) const;
 };
 

@@ -8,31 +8,29 @@
 #include <chrono>
 
 #include "Socket.h"
-#include "MessageQueue.h"
-
 
 using namespace std;
 
-class Network {
-    public:
+class Network
+{
+public:
     Network(){};
-    Network(Network const&) = delete;
+    Network(Network const &) = delete;
     Network(Network &&);
-    Network& operator=(Network const&) = delete;
-    Network& operator=(Network &&);
+    Network &operator=(Network const &) = delete;
+    Network &operator=(Network &&);
 
-    ~Network(){
-    };
+    ~Network(){};
     void run();
     bool hasMessage();
     void waitForMessage();
     void send(string);
     string recv();
     void shutdown();
-    
+
     string printNetworkActivity();
 
- private:   
+private:
     void recv_loop();
     void send_loop();
     bool _running = true;
@@ -49,21 +47,20 @@ class Network {
     condition_variable _rcv_cv;
     friend class SensorNetworkAdapter;
     friend class ControllerNetworkAdapter;
-
-
 };
 
-
-class ControllerNetworkAdapter : public Network {
-    public:
+class ControllerNetworkAdapter : public Network
+{
+public:
     ControllerNetworkAdapter(string ip, int port);
-    private:
+
+private:
     string _ip;
 };
 
-
-class SensorNetworkAdapter : public Network {
-    public:
+class SensorNetworkAdapter : public Network
+{
+public:
     SensorNetworkAdapter(int port);
 };
 
