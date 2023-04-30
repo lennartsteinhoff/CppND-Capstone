@@ -44,6 +44,8 @@ class Network {
     double _rx;
     deque<string> _send_queue;
     deque<string> _recv_queue;
+    mutex _rcv_mtx;
+    mutex _snd_mtx;
     friend class SensorNetworkAdapter;
     friend class ControllerNetworkAdapter;
 

@@ -41,11 +41,13 @@ void Network::run() {
 
 void Network::recv_loop() {
     while(_running) {
+        _rcv_mtx.lock();
         string s;
         if(_socket.recv(s)) {
             _recv_queue.push_back(s);
             _rx += s.size();
         }
+        _rcv_mtx.unlock();
         this_thread::sleep_for(chrono::milliseconds(10));
     }
     
@@ -54,22 +56,26 @@ void Network::recv_loop() {
 
 void Network::send_loop() {
     while (_running) {
+        _snd_mtx.lock();
         if(!_send_queue.empty()) {
             auto data = _send_queue.front();
             _send_queue.pop_front();
             _socket.send(data);
             _tx += data.size();
         }
+        _snd_mtx.unlock();
         this_thread::sleep_for(chrono::milliseconds(10));
     }
     
 }
 
 bool Network::hasMessage() {
+    lock_guard lock(_rcv_mtx);
     return !_recv_queue.empty();
 }
 
 string Network::recv() {
+    lock_guard lock(_rcv_mtx);
     if(!_recv_queue.empty()) {
         auto ret = _recv_queue.back();
         _recv_queue.pop_back();
@@ -80,6 +86,7 @@ string Network::recv() {
 }
 
 void Network::send(string s) {
+    lock_guard lock(_snd_mtx);
     _send_queue.emplace_back(s);
 }
 

@@ -24,7 +24,7 @@ class Controller {
     }
     string printStatus(){
         string status = _measurementMode ? "ongoing" : "stopped";
-        return "Controller: Measurement " + status + "Network: " + _network->printNetworkActivity();
+        return "Controller: Measurement " + status + "\nNetwork: " + _network->printNetworkActivity();
     }
     
     void runNetwork();
@@ -54,6 +54,8 @@ class Controller {
     private:
     deque<Message> _events;
     deque<Message> _data;
+    mutex _data_mtx;
+    mutex _events_mtx;
     thread _network_thread;
     Network* _network = nullptr;
     bool _running {true};

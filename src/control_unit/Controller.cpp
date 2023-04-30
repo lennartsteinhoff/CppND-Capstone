@@ -20,6 +20,8 @@ void Controller::runNetwork()
     Message m;
 
     while (_running) {
+        _data_mtx.lock();
+        _events_mtx.lock();
         while(_network->hasMessage()){
             received_data = _network->recv();
             m.setPayload(received_data);
@@ -29,7 +31,9 @@ void Controller::runNetwork()
             } else {
                 _events.emplace_back(m);
             }
-        }  
+        }
+        _data_mtx.unlock();
+        _events_mtx.unlock();  
         std::this_thread::sleep_for(chrono::milliseconds(100));
     }
 }
@@ -47,6 +51,8 @@ void Controller::runStateMachine()
 
 Message::Data Controller::GetMeasurement() 
 {
+    lock_guard lock1(_data_mtx);
+    lock_guard lock2(_events_mtx);
     _events.clear();
     vector<vector<double>> measurement {};
     while(!_data.empty()) 
