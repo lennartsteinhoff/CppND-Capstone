@@ -25,8 +25,10 @@ The visualzation and main loops builds upon: https://github.com/udacity/CppND-Ca
 - Navigate to "DESKTOP"
 
 ### Interaction
-Start/Stop Measurement by pressing "s", when SLD_Window is open and selected
-Press c or ctrl-c to trigger the shutdown process for both components
+Start/Stop Measurement by pressing "s", when SLD_Window is open and selected.
+
+### Shutdown
+Close the SDL_Window Alternative, if keyboad is captured by terminal: Press c or ctrl-c for ./control to trigger the shutdown process.
 
 ## Structure:
 
