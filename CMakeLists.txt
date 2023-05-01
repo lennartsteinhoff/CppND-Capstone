@@ -25,4 +25,3 @@ add_executable(control ${CONTROL_SRC_FILES})
 
 string(STRIP ${SDL2_LIBRARIES} SDL2_LIBRARIES)
 target_link_libraries(control ${SDL2_LIBRARIES})
-
