@@ -6,7 +6,7 @@ The protocol, the messages and the implementation of the communication between t
 
 
 ## Reference to code of other authors
-The networking code is build upon: https://tldp.org/LDP/LG/issue74/tougher.html
+The networking code is build upon: https://tldp.org/LDP/LG/issue74/tougher.html.
 The visualzation and main loops builds upon: https://github.com/udacity/CppND-Capstone-Snake-Game
 
 ## Basic Build Instructions
@@ -14,11 +14,17 @@ The visualzation and main loops builds upon: https://github.com/udacity/CppND-Ca
 1. Clone this repo.
 2. Make a build directory in the top level directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
-4. Run it terminal 1: `./sensor`
-5. Run it terminal 2: `./control`
+4. Run in terminal 1: `./sensor`
+5. Run in terminal 2: `./control`
 
 ## User Interaction
 
+### Setup: In Udacity workspace: 
+- Run in terminal 1: `./sensor`
+- Run in terminal 2: `./control`
+- Navigate to "DESKTOP"
+
+### Interaction
 Start/Stop Measurement by pressing "s", when SLD_Window is open and selected
 Press c or ctrl-c to trigger the shutdown process for both components
 
