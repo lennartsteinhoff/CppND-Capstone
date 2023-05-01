@@ -49,10 +49,10 @@ void Sensor::updateInput() {
     while(_network->hasMessage()) {
         std::string s = _network->recv();
         if(s != _prev_input) cout << "Received Input: " << s << endl;
-        if(s == "sleep") {
+        if(s == "control: sleep_sensor") {
             _state = SensorState::sleep;
         }
-        if(s == "running") {
+        if(s == "control: start_sensor") {
             _state = SensorState::running;
         }
         if(s == "control: shutdown_sensor") {
