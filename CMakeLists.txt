@@ -7,6 +7,7 @@ add_definitions(-std=c++17)
 
 set(CXX_FLAGS "-Wall")
 set(CMAKE_CXX_FLAGS, "${CXX_FLAGS}")
+set(CMAKE_EXE_LINKER_FLAGS "-pthread -lpthread")
 
 project(Capstone)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
@@ -19,7 +20,6 @@ find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS} ${INC_FILES})
 cmake_print_variables(${SENSOR_SRC_FILES})
 
-#add_executable(sensor src/sensor/sensor_main.cpp src/network/Socket.cpp src/network/Network.cpp src/sensor/Sensor.cpp)
 add_executable(sensor ${SENSOR_SRC_FILES})
 add_executable(control ${CONTROL_SRC_FILES})
 

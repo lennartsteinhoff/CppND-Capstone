@@ -1,0 +1,11 @@
+Out of scope, next steps:
+- Better Eventloop in Main                                           
+- Reactive to: Random failures, Mouse clicks
+- Better recovery from Error states
+- improve understanding of the socket interface 
+- Rework use of messages
+- Set frequency of sensor 
+- Implement Better Messages in efficient Binary Format 
+- Do logging  
+- Implement restart behavior  
+- Get rid of sending deadlock unlock message for network receive call by controller during shutdown
