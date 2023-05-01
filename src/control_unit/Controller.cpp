@@ -71,7 +71,7 @@ void Controller::runStateMachine()
 {
 
     while(_running) {
-        string s = _measurementMode ? "running" : "sleep";
+        string s = _measurementMode ? "control: start_sensor" : "control: sleep_sensor";
         //std::cout << "Network Controller: Send:" << s << std::endl; 
         _network->send(s);
         std::this_thread::sleep_for(chrono::milliseconds(1000));

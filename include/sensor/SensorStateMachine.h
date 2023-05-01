@@ -24,11 +24,11 @@ public:
             switch (_state)
             {
             case SensorState::sleep:
-                cout << "Sleeping" << endl;
+                cout << "status_sensor: sleeping" << endl;
                 break;
 
             case SensorState::running:
-                cout << "Running" << endl;
+                cout << "status_sensor: running" << endl;
                 break;
             }
             this_thread::sleep_for(chrono::milliseconds(500));
@@ -37,11 +37,11 @@ public:
     void input(string s)
     {
         cout << "Received Input: " << s << endl;
-        if (s == "sleep")
+        if (s == "control: sleep_sensor")
         {
             _state = SensorState::sleep;
         }
-        if (s == "running")
+        if (s == "control: start_sensor")
         {
             _state = SensorState::running;
         }

@@ -71,15 +71,14 @@ Protocol Controller and Sensor:
 ## Messages:
 
 ### control:
-String payload = "control: start_sensor"
-String payload = "control: sleep_sensor"
-String payload = "control: restart_sensor"
-String payload = "control: shutdown_sensor"
+- String payload = "control: start_sensor"
+- String payload = "control: sleep_sensor"
+- String payload = "control: shutdown_sensor"
 
 ### status_senor:
-String payload = "status_sensor: sleeping"
-String payload = "status_sensor: running"
-String payload = "status_sensor: error"
+- String payload = "status_sensor: sleeping"
+- String payload = "status_sensor: running"
+- String payload = "status_sensor: error"
 
 
 ### data:

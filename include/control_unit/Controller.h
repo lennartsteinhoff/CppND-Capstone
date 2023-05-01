@@ -5,6 +5,7 @@
 #include <memory>
 #include <deque>
 #include <thread>
+#include <mutex>
 
 #include "Network.h"
 #include "Message.h"
